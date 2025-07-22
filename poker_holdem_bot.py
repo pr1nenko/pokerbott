@@ -71,14 +71,11 @@ def evaluate_hand(cards):
     is_straight = False
     best_straight = None
 
-    # Перевірка на звичайні стріти
     if len(unique_ranks) >= 5:
         for i in range(len(unique_ranks) - 4):
             if unique_ranks[i + 4] - unique_ranks[i] == 4:
                 is_straight = True
                 best_straight = unique_ranks[i:i + 5]
-
-    # Спеціальний випадок: A-2-3-4-5
     if not is_straight and set(unique_ranks[:5]) >= {2, 3, 4, 5, 14}:
         is_straight = True
         best_straight = [5, 4, 3, 2, 14]  # A, 2, 3, 4, 5 → стріт
@@ -176,7 +173,7 @@ async def show(update: Update, context: ContextTypes.DEFAULT_TYPE):
             best_score = score
             best_combo = combo_name
 
-    await update.message.reply_text(f"🃏 Твоя рука + столі: {', '.join(player_hand + community_cards['flop'])}")
+    await update.message.reply_text(f"🃏 Твоя рука + стіл: {', '.join(player_hand + community_cards['flop'])}")
     if current_stage in ["turn", "river"]:
         await update.message.reply_text(f" + {community_cards['turn']}")
     if current_stage == "river":
